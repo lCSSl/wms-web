@@ -1,4 +1,6 @@
 import {combineReducers} from "redux"
+import {Key, PcCookie} from '@/utils/cookie'
+
 /*
  * 包含N个reducer函数的模块
  * ###以下自我见解###
@@ -7,69 +9,53 @@ import {combineReducers} from "redux"
  * dispatch会搜索全部函数....效率低下?
  */
 import {
-  SET_PageNum,
-  Change_ParentId,
-  Reset_ParentId,
-  Change_ParentName,
-  Reset_ParentName,
-  SHOW_UPDATE_MODAL,
-  SHOW_ADD_MODAL,
-  UNSHOW_MODAL
+  SET_USER_STATE,
+  GET_USER_STATE,
+  RESET_USER_STATE,
 } from "./action-types"
 
-function currentCargoCategoryPageNum(state =1,action) {
+function UserState(state = {}, action) {
   switch (action.type) {
-    case SET_PageNum:{
-      return action.data;
-    }
-    default:
+    case SET_USER_STATE: {
+      const {userInfo, accessToken, refreshToken} = action.data;
+      //状态赋值
+      state.userInfo = userInfo;
+      state.accessToken = accessToken;
+      state.refreshToken = refreshToken;
+      //保存到cookie
+      PcCookie.set(Key.userInfoKey, userInfo)
+      PcCookie.set(Key.accessTokenKey, accessToken)
+      PcCookie.set(Key.refreshTokenKey, refreshToken)
       return state;
-  }
-}
-function currentCargoCategoryParentId(state = 0,action) {
-  switch (action.type) {
-    case Change_ParentId: {
-      return action.data;
     }
-    case Reset_ParentId:{
-      return 0;
-    }
-    default:
+      break;
+    case GET_USER_STATE: {
+      const userInfo = PcCookie.get(Key.userInfoKey);
+      const accessToken = PcCookie.get(Key.accessTokenKey);
+      const refreshToken = PcCookie.get(Key.refreshTokenKey);
+      //状态赋值
+      state.userInfo = userInfo;
+      state.accessToken = accessToken;
+      state.refreshToken = refreshToken;
+      console.log("redux",state)
       return state;
-  }
-}
-function currentCargoCategoryParentName(state ="",action) {
-  switch (action.type) {
-    case Change_ParentName: {
-      return action.data;
     }
-    case Reset_ParentName:{
-      return "";
-    }
-    default:
+      break;
+    case RESET_USER_STATE: {
+      state.userInfo = null;
+      state.accessToken = null;
+      state.refreshToken = null;
+      PcCookie.remove(Key.userInfoKey);
+      PcCookie.remove(Key.accessTokenKey);
+      PcCookie.remove(Key.refreshTokenKey);
       return state;
-  }
-}
-
-function showCargoCategoryModalStatus(state = 0,action) {
-  switch (action.type) {
-    case SHOW_ADD_MODAL: {
-      return 1;
     }
-    case SHOW_UPDATE_MODAL:{
-      return 2;
-    }
-    case UNSHOW_MODAL:{
-      return 0;
-    }
+      break;
     default:
       return state;
   }
 }
 
 export default combineReducers({
-  currentCargoCategoryPageNum, //指定reducer对应的属性
-  currentCargoCategoryParentId,
-  currentCargoCategoryParentName,
-  showCargoCategoryModalStatus,
+  UserState
 });

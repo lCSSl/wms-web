@@ -2,7 +2,7 @@ import React,{Component} from "react";
 import {Card, Select, Input, Button, Table, message, Row, Col} from "antd";
 import "./CargoHome.less"
 import {PlusOutlined} from "@ant-design/icons";
-import LinkButton from "../../components/LinkButton/LinkButton";
+import LinkButton from "../../layouts/LinkButton/LinkButton";
 const {Option} = Select;
 export default class CargoHome extends Component{
 

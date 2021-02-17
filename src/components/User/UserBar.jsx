@@ -26,7 +26,7 @@ export default class UserBar extends Component{
   }
   render() {
     const {resourcePath} = memoryUtils.user_resource;
-    const {userName} = memoryUtils.user_key.user;
+    const {userName} = memoryUtils.user_key.user?memoryUtils.user_key.user:"UserName";
     let avatarUrl;
     if (resourcePath){
       avatarUrl = resourcePath;

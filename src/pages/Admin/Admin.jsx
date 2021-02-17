@@ -20,13 +20,14 @@ import storageUtils from "../../utils/storageUtils";
  * 组件
  */
 import {reqLogin} from "../../api";
-import LeftNav from "../../components/LeftNav/LeftNav";
-import RightHeader from "../../components/RightHeader/RightHeader";
+import LeftNav from "../../layouts/LeftNav/LeftNav";
+import RightHeader from "../../layouts/RightHeader/RightHeader";
 /**
  * LESS
  */
 import './Admin.less'
-import RightContent from "../../components/RightContent/RightContent";
+import RightContent from "../../layouts/RightContent/RightContent";
+import Auth from "../../components/Auth";
 const { Header} = Layout;
 
 class Admin extends Component{
@@ -80,49 +81,49 @@ class Admin extends Component{
     const {user,date} = user_key;
     // 内存没有存储user
     if (!user||!user.userId){
-      return <Redirect to="/login"/>
+      // return <Redirect to="/login"/>
     }
     let userAuthenticationModal;
     // 超过一小时未操作。需要验证登录
     if ((moment().unix()-date)>=3600){
-      userAuthenticationModal = (
-        <Modal
-          title="确认用户登录"
-          visible={visible}
-          closable={false}
-          maskClosable={false}
-          centered={true}
-
-          footer={
-            <Button type="primary" className="ant-btn ant-btn-primary" loading={confirmModalLoading} onClick={this.handleModalOK}>
-              <span>OK</span>
-            </Button>
-          }
-        >
-          <Form
-            name="normal_checkUser"
-            className="checkUser-form"
-          >
-            <Form.Item
-              name="userPassword"
-              rules={[
-                { required: true, message: '请输入您的密码!' },
-                { whitespace: true, message: '不允许空格' },
-              ]}
-            >
-              <Input
-                prefix={<LockOutlined className="site-form-item-icon" />}
-                type="password"
-                placeholder="密码"
-                value={userPassword}
-                onChange={this.handleModalChange}
-              />
-            </Form.Item>
-          </Form>
-        </Modal>
-      );
+      // userAuthenticationModal = (
+      //   <Modal
+      //     title="确认用户登录"
+      //     visible={visible}
+      //     closable={false}
+      //     maskClosable={false}
+      //     centered={true}
+      //
+      //     footer={
+      //       <Button type="primary" className="ant-btn ant-btn-primary" loading={confirmModalLoading} onClick={this.handleModalOK}>
+      //         <span>OK</span>
+      //       </Button>
+      //     }
+      //   >
+      //     <Form
+      //       name="normal_checkUser"
+      //       className="checkUser-form"
+      //     >
+      //       <Form.Item
+      //         name="userPassword"
+      //         rules={[
+      //           { required: true, message: '请输入您的密码!' },
+      //           { whitespace: true, message: '不允许空格' },
+      //         ]}
+      //       >
+      //         <Input
+      //           prefix={<LockOutlined className="site-form-item-icon" />}
+      //           type="password"
+      //           placeholder="密码"
+      //           value={userPassword}
+      //           onChange={this.handleModalChange}
+      //         />
+      //       </Form.Item>
+      //     </Form>
+      //   </Modal>
+      // );
     }else if ((moment().unix()-date)>=259200){
-      return <Redirect to="/login"/>
+      // return <Redirect to="/login"/>
     }else {
       //刷新登录信息
       storageUtils.updateUser();
@@ -139,6 +140,7 @@ class Admin extends Component{
     }
     return (
       <Layout className="ant-layout">
+        <Auth/>
         <LeftNav collapsed={collapsed}/>
         <Layout className="site-layout-right">
           <Header className="right-header">

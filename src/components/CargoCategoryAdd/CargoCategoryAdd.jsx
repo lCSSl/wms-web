@@ -4,21 +4,9 @@ import MyIcon from "../../assets/icon/myIcon";
 import {reqFirstCategoryList, reqAddCargoCategory} from "../../api";
 import PropType from "prop-types"
 import {connect} from "react-redux";
-import {
-  showAddModal,
-  showUpdateModal,
-  unShowModal
-} from "../../redux/actions";
 const { Option } = Select;
 class CargoCategoryAdd extends Component{
-  static propTypes = {
-    parentId:PropType.number.isRequired,
-    showCargoCategoryModalStatus:PropType.number.isRequired,
-    showAddModal:PropType.func.isRequired,
-    showUpdateModal:PropType.func.isRequired,
-    unShowModal:PropType.func.isRequired,
-    getCargoCategoryList:PropType.func.isRequired
-  }
+  static propTypes = {}
   state = {
     cargoCategoryNameItem:{
       value:"",
@@ -197,9 +185,4 @@ class CargoCategoryAdd extends Component{
     );
   }
 }
-export default connect(
-  state =>({
-    showCargoCategoryModalStatus:state.showCargoCategoryModalStatus,
-  }),
-  {showAddModal,showUpdateModal,unShowModal}
-)(CargoCategoryAdd);
+export default connect()(CargoCategoryAdd);

@@ -2,37 +2,15 @@ import React,{Component} from "react";
 import PropType from "prop-types"
 import {Card, Table, Button, message} from "antd"
 import {PlusOutlined, SwapRightOutlined} from "@ant-design/icons"
-import LinkButton from "../../components/LinkButton/LinkButton";
+import LinkButton from "../../layouts/LinkButton/LinkButton";
 import "./CargoCategoryManagement.less"
 import {connect} from "react-redux"
-import {
-  changeParentId,
-  resetParentId,
-  changeParentName,
-  resetParentName,
-  setPageNum,
-  showAddModal,
-  showUpdateModal,
-  unShowModal,
-} from "../../redux/actions"
 import {reqCargoCategoryList} from "../../api";
 import CargoCategoryAdd from "../../components/CargoCategoryAdd/CargoCategoryAdd";
 import CargoCategoryUpdate from "../../components/CargoCategoryUpdate/CargoCategoryUpdate";
 class CargoCategoryManagement extends Component{
 
   static propTypes = {
-    currentCargoCategoryPageNum: PropType.number.isRequired,
-    setPageNum:PropType.func.isRequired,
-    currentCargoCategoryParentId: PropType.number.isRequired,
-    changeParentId: PropType.func.isRequired,
-    resetParentId: PropType.func.isRequired,
-    currentCargoCategoryParentName: PropType.string.isRequired,
-    changeParentName: PropType.func.isRequired,
-    resetParentName: PropType.func.isRequired,
-    showCargoCategoryModalStatus:PropType.number.isRequired,
-    showAddModal:PropType.func.isRequired,
-    showUpdateModal:PropType.func.isRequired,
-    unShowModal:PropType.func.isRequired
   }
 
   state = {
@@ -142,7 +120,7 @@ class CargoCategoryManagement extends Component{
       /**
        * 配置分页器
        */
-      this.props.setPageNum(page);
+      // this.props.setPageNum(page);
       this.setState({pagination});
       /**
        * 数据处理
@@ -173,8 +151,8 @@ class CargoCategoryManagement extends Component{
   }
 
   showAddModal= (parentId) =>{
-    this.props.changeParentId(parentId);
-    this.props.showAddModal();
+    // this.props.changeParentId(parentId);
+    // this.props.showAddModal();
   }
 
   showUpdateModal = (cargoCategory) =>{
@@ -183,7 +161,7 @@ class CargoCategoryManagement extends Component{
       updateCargoCategoryName:cargoCategory.cargoCategoryName,
       updateCargoCategoryParentId:cargoCategory.cargoCategoryParentId,
     },()=>{
-      this.props.showUpdateModal();
+      // this.props.showUpdateModal();
     });
   }
   UNSAFE_componentWillMount() {
@@ -232,12 +210,4 @@ class CargoCategoryManagement extends Component{
     );
   }
 }
-export default connect(
-  state =>({
-    currentCargoCategoryPageNum:state.currentCargoCategoryPageNum,
-    currentCargoCategoryParentId:state.currentCargoCategoryParentId,
-    currentCargoCategoryParentName:state.currentCargoCategoryParentName,
-    showCargoCategoryModalStatus:state.showCargoCategoryModalStatus
-  }), //state就是一个comments数组
-  {setPageNum,changeParentId,resetParentId,changeParentName,resetParentName,showAddModal,showUpdateModal,unShowModal}
-)(CargoCategoryManagement);
+export default connect()(CargoCategoryManagement);

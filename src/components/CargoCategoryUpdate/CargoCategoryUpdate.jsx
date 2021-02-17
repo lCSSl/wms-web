@@ -3,27 +3,10 @@ import PropType from "prop-types"
 import {Button, Form, Input, message, Modal} from "antd"
 import MyIcon from "../../assets/icon/myIcon";
 import {connect} from "react-redux";
-import {
-  changeParentId,
-  resetParentId,
-  showAddModal,
-  showUpdateModal,
-  unShowModal
-} from "../../redux/actions";
 import {reqUpdateCargoCategory} from "../../api";
 
 class CargoCategoryUpdate extends Component{
-  static propTypes = {
-    currentCargoCategoryParentId:PropType.number.isRequired,
-    showCargoCategoryModalStatus:PropType.number.isRequired,
-    showAddModal:PropType.func.isRequired,
-    showUpdateModal:PropType.func.isRequired,
-    unShowModal:PropType.func.isRequired,
-    updateCargoCategoryId:PropType.number.isRequired,
-    updateCargoCategoryName:PropType.string.isRequired,
-    updateCargoCategoryParentId:PropType.number.isRequired,
-    getCargoCategoryList:PropType.func.isRequired
-  }
+  static propTypes = {}
   state = {
     cargoCategoryNameItem:{
       value:this.props.updateCargoCategoryName,
@@ -149,14 +132,19 @@ class CargoCategoryUpdate extends Component{
         title="修改分类"
         visible={showCargoCategoryModalStatus===2}
         centered={true}
-        onCancel={this.onUpdateModalCancel}
-        onOk={this.onUpdateModalOk}
+        // onCancel={this.onUpdateModalCancel}
+        // onOk={this.onUpdateModalOk}
         footer={
           [
-            <Button key="back" onClick={this.onUpdateModalCancel}>
+            <Button key="back"
+                    // onClick={this.onUpdateModalCancel}
+            >
               取消
             </Button>,
-            <Button key="submit" type="primary" loading={confirmModalLoading} onClick={this.onUpdateModalOk}>
+            <Button key="submit" type="primary"
+                    loading={confirmModalLoading}
+                    // onClick={this.onUpdateModalOk}
+            >
               修改
             </Button>,
           ]
@@ -171,7 +159,7 @@ class CargoCategoryUpdate extends Component{
               prefix={<MyIcon type="categorySvg" />}
               placeholder="分类名"
               value={cargoCategoryNameItem.value}
-              onChange={this.onCargoCategoryNameChange}
+              // onChange={this.onCargoCategoryNameChange}
             />
           </Form.Item>
         </Form>
@@ -180,10 +168,4 @@ class CargoCategoryUpdate extends Component{
     );
   }
 }
-export default connect(
-  state =>({
-    currentCargoCategoryParentId:state.currentCargoCategoryParentId,
-    showCargoCategoryModalStatus:state.showCargoCategoryModalStatus
-  }),
-  {changeParentId,resetParentId,showAddModal,showUpdateModal,unShowModal}
-)(CargoCategoryUpdate);
+export default connect()(CargoCategoryUpdate);

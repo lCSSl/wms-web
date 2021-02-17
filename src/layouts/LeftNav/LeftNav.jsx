@@ -1,6 +1,6 @@
 import React,{Component} from "react";
 import {Link,withRouter} from "react-router-dom";
-import CompanyName from "../ConpanyName/CompanyName";
+import CompanyName from "../../components/ConpanyName/CompanyName";
 import {NavLink} from "react-router-dom";
 import {Layout, Menu,message} from "antd";
 import PropTypes from "prop-types";
@@ -102,9 +102,6 @@ class LeftNav extends Component{
     this.menuNodes = this.getMenuNodes(menuList)
   }
   componentDidMount() {
-  }
-  o = () =>{
-    console.log("oooo")
   }
   render() {
     const {collapsed} = this.props;
